@@ -1,65 +1,88 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import '../../consts/colors.dart'; // Ensure this path is correct
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:untitled15/consts/colors.dart';
+import 'package:untitled15/consts/strings.dart';
 
-class ImageWidget extends StatefulWidget {
-  const ImageWidget({super.key});
+import '../../consts/styles.dart';
+import '../profile/components/text_field/email_widget.dart';
+import '../profile/components/text_field/gender.dart';
+import '../profile/components/text_field/text_field_entry.dart';
+import '../profile/components/text_field/text_field_number.dart';
+import '../profile/components/text_field/text_name_field.dart';
 
+class ProfileScreenoo extends StatefulWidget {
   @override
-  _ImageWidgetState createState() => _ImageWidgetState();
+  _ProfileScreenooState createState() => _ProfileScreenooState();
 }
 
-class _ImageWidgetState extends State<ImageWidget> {
-  File? _image;
-  final ImagePicker _picker = ImagePicker();
+class _ProfileScreenooState extends State<ProfileScreenoo> {
+  bool isEditable = false; // Initial state of text fields being not editable
+  String buttonText = 'Update';
 
-  Future<void> _pickImage() async {
-    try {
-      final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        setState(() {
-          _image = File(pickedFile.path);
-        });
-      }
-    } catch (e) {
-      print('Failed to pick image: $e');
-    }
+  var maskFormatter = MaskTextInputFormatter(
+      mask: '(###) ###-####',
+      filter: {"#": RegExp(r'[0-9]')}
+  );// Initial text of the button
+  final TextEditingController emailController = TextEditingController();
+
+  // Function to toggle the editability of the text fields and update the button text
+  void _toggleEdit() {
+    setState(() {
+      isEditable = !isEditable; // Toggle the boolean state
+      buttonText = isEditable ? 'Save' : 'Update'; // Update button text accordingly
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      appBar: AppBar(
-        title: const Text('Image'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (_image != null)
-              CircleAvatar(
-                radius: 100,
-                backgroundImage: FileImage(_image!),
-              )
-            else
-              CircleAvatar(
-                radius: 100,
-                backgroundColor: Colors.grey.shade200,
-                child: IconButton(
-                  icon: Icon(Icons.add_photo_alternate, size: 50),
-                  onPressed: _pickImage,
-                ),
+      body: Stack(
+        children: <Widget>[
+          Column(
+          children: [
+            Container(
+              height: 190,
+              color: primaryColor,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 20),
+                  profileTextField(firstName, bold, 14),
+                  profileTextFieldEntry(greyColor, blackColor, isEditable),
+                  const SizedBox(height: 20),
+                  profileTextField(lastName, bold, 14),
+                  profileTextFieldEntry(greyColor, blackColor, isEditable),
+                  const SizedBox(height: 20),
+                  profileTextField(email, bold, 14),
+                  EmailInputField(controller: emailController,  isEditable: isEditable,), // Using the EmailInputField
+                  const SizedBox(height: 20),
+                  profileTextField(phoneNumber, bold, 14),
+                  phoneTextFieldEntry(greyColor, blackColor, maskFormatter, isEditable),
+                  const SizedBox(height: 20),
+                  profileTextField(gender, bold, 14),
+                  GenderDropdown(isEditable: isEditable,), // Ensure these functions support an editable flag
+
+
+                  SizedBox(height: 20),
+
+
+                  ElevatedButton(
+                    onPressed: _toggleEdit, // Attach the toggle function to button press
+                    child: Text(buttonText), // Display dynamic button text
+                  ),
+                ],
               ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: const Text('Upload Image'),
             ),
           ],
-        ),
+    ),
+  ],
       ),
+
     );
   }
 }
+
+

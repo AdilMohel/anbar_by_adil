@@ -7,10 +7,12 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../../consts/colors.dart';
 
 
-Widget phoneTextFieldEntry(Color borderColor, Color focusedBorderColor, MaskTextInputFormatter formatter) {
+Widget phoneTextFieldEntry(Color borderColor, Color focusedBorderColor,
+    MaskTextInputFormatter formatter, bool isEditable) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
     child: TextField(
+      enabled: isEditable,
       inputFormatters: [formatter],
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
@@ -23,7 +25,7 @@ Widget phoneTextFieldEntry(Color borderColor, Color focusedBorderColor, MaskText
           borderSide: BorderSide(color: focusedBorderColor),
         ),
       ),
-      cursorColor: blackColor,
+        cursorColor: isEditable ? blackColor : Colors.transparent
     ),
   );
 }

@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:untitled15/views/home_Screen/Components/hot_Products.dart';
 import 'package:untitled15/views/home_Screen/Components/hot_services.dart';
 import 'package:untitled15/views/home_Screen/Components/our_service.dart';
@@ -7,6 +8,7 @@ import '../../consts/colors.dart';
 import '../../consts/images.dart';
 import '../../consts/strings.dart';
 import '../../consts/styles.dart';
+import '../image/image.dart';
 import 'Components/annual_contract_Card.dart';
 import 'Components/banner.dart';
 
@@ -34,7 +36,9 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Image.asset(imgLogo2, width: 165, height: 45,),
                             SizedBox(width: 20),
-                            IconButton(onPressed: (){}, icon: Image.asset(imgmenu))
+                            IconButton(onPressed: (){
+                              Get.to(ProfileScreenoo());
+                            }, icon: Image.asset(imgmenu))
                             ,
                           ],
                         ),

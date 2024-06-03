@@ -1,15 +1,13 @@
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../consts/colors.dart';
 
 
-Widget profileTextFieldEntry(Color borderColor, Color focusedBorderColor) {
+Widget profileTextFieldEntry(Color borderColor, Color focusedBorderColor, bool isEditable) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
     child: TextField(
+      enabled: isEditable,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -20,7 +18,7 @@ Widget profileTextFieldEntry(Color borderColor, Color focusedBorderColor) {
           borderSide: BorderSide(color: focusedBorderColor),
         ),
       ),
-      cursorColor: blackColor,
+        cursorColor: isEditable ? blackColor : Colors.transparent
     ),
   );
 }
