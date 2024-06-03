@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../../consts/colors.dart';
-import '../../profile_Screen.dart'; // Ensure this import is necessary and correct
 
 enum Gender { male, female, other }
 

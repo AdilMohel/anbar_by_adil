@@ -147,7 +147,6 @@ import 'package:untitled15/widget_common/our_button.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'components/text_field/email_widget.dart';
 import 'components/text_field/gender.dart';
 import 'components/text_field/text_field_entry.dart';
 import 'components/text_field/text_field_number.dart';
